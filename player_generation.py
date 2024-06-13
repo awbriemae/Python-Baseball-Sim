@@ -3,6 +3,8 @@
 import random
 from class_definitions import Player
 
+MIN_STAT = 20
+MAX_STAT = 100
 
 available_fnames = []
 available_lnames = []
@@ -26,11 +28,11 @@ team1 = []
 def player_creation(team):
     fname = available_fnames[random.randint(0, len(available_fnames))]
     lname = available_lnames[random.randint(0, len(available_lnames))]
-    batting = random.randint(0, 100)
-    pitching = random.randint(0, 100)
-    running = random.randint(0, 100)
-    catching = random.randint(0, 100)
-    throwing = random.randint(0, 100)
+    batting = random.randint(MIN_STAT, MAX_STAT)
+    pitching = random.randint(MIN_STAT, MAX_STAT)
+    running = random.randint(MIN_STAT, MAX_STAT)
+    catching = random.randint(MIN_STAT, MAX_STAT)
+    throwing = random.randint(MIN_STAT, MAX_STAT)
 
 
     team.append(Player(fname=fname, 
