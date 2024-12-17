@@ -41,8 +41,9 @@ available_positions = ["p","c","1b","2b","ss","3b","lf","cf","rf"]
 
 # Loop through available players aznd overwrite their position with the new position
 
-# Creates a single player and adds him to a team
-def player_creation():
+# Randomises the values for a single player
+
+def player_randomiser():
     fname = available_fnames[random.randint(0, len(available_fnames))]
     lname = available_lnames[random.randint(0, len(available_lnames))]
     batting = random.randint(MIN_STAT, MAX_STAT)
@@ -52,6 +53,12 @@ def player_creation():
     throwing = random.randint(MIN_STAT, MAX_STAT)
     position = Player.position
 
+    return fname, lname, batting, pitching, running, catching, throwing, position
+
+# Creates the player using the class and the inputted variables created above ^
+# Changed this for multifunctionality
+
+def player_creation(fname, lname, batting, pitching, running, catching, throwing, position):
     return Player(fname=fname, 
                         lname=lname, 
                         batting=batting, 
@@ -85,6 +92,78 @@ def player_creation():
 #        else:
 #            continue
 
+def savePlayersToFile(users_team):
+    f = open("UserPlayerTeam.txt", "w")
+    for i in range(len(users_team)):
+        f.write(f"{users_team[i].fname},{users_team[i].lname},{users_team[i].batting},{users_team[i].pitching},{users_team[i].running},{users_team[i].catching},{users_team[i].throwing},{users_team[i].position}\n")
+    f.close()
+
+# what am i thinking
+player_temp_stats1 = []
+player_temp_stats2 = []
+player_temp_stats3 = []
+player_temp_stats4 = []
+player_temp_stats5 = []
+player_temp_stats6 = []
+player_temp_stats7 = []
+player_temp_stats8 = []
+player_temp_stats9 = []
+
+player_temp_stats_fulllist = []
+
+def loadPlayersFromFile():
+    f = open("UserPlayerTeam.txt", "r")
+    x = 0
+    for i in f:
+        playerSplit = i.strip()
+        playerSplit = playerSplit.split(",")
+        for i in playerSplit:  
+            x += 1
+            print(x)
+            if 1 <= x <= 8:
+                player_temp_stats1.append(i)
+            elif 9 <= x <= 16:
+                player_temp_stats2.append(i)
+            elif 17 <= x <= 24:
+                player_temp_stats3.append(i)
+            elif 25 <= x <= 32:
+                player_temp_stats4.append(i)
+            elif 33 <= x <= 40:
+                player_temp_stats5.append(i)
+            elif 41 <= x <= 48:
+                player_temp_stats6.append(i)
+            elif 49 <= x <= 56:
+                player_temp_stats7.append(i)
+            elif 57 <= x <= 64:
+                player_temp_stats8.append(i)
+            else:
+                player_temp_stats9.append(i)
+            #else:
+                #player_temp_stats3.append(i)
+    #print(player_temp_stats1)
+    #print(player_temp_stats2)
+    #print(player_temp_stats3)
+    player_temp_stats_fulllist.append(player_temp_stats1)
+    player_temp_stats_fulllist.append(player_temp_stats2)
+    player_temp_stats_fulllist.append(player_temp_stats3)
+    player_temp_stats_fulllist.append(player_temp_stats4)
+    player_temp_stats_fulllist.append(player_temp_stats5)
+    player_temp_stats_fulllist.append(player_temp_stats6)
+    player_temp_stats_fulllist.append(player_temp_stats7)
+    player_temp_stats_fulllist.append(player_temp_stats8)
+    player_temp_stats_fulllist.append(player_temp_stats9)
+    # I've had to repeat "It's not stupid if it works" so many times...
+    y = 0
+    for y in range(team_amount):
+        createdPlayer = player_creation(player_temp_stats_fulllist[y][0], player_temp_stats_fulllist[y][1], player_temp_stats_fulllist[y][2], player_temp_stats_fulllist[y][3], player_temp_stats_fulllist[y][4], player_temp_stats_fulllist[y][5], player_temp_stats_fulllist[y][6], player_temp_stats_fulllist[y][7])
+        test_team.append(createdPlayer)
+        print(createdPlayer)
+
+
+
+
+
+team_name = "The Sligo Sharters"
 
 users_team = []
 
@@ -97,16 +176,52 @@ def positionPicker(createdPlayer, available_positions, tempdict):
             print(tempdict.get(item))
         else:
             continue
-    position1_choice = int(input("--> "))
+
+    # Getting user input with validation    
+    while True:
+        #position1_choice = int(input("--> "))
+        try:
+            position1_choice = int(input("--> "))
+            createdPlayer.position = tempdict.get(position1_choice)
+        except ValueError:
+            print("Use a number")
+            continue
+        try: 
+            available_positions.remove(position1_choice)
+        except ValueError:
+            print("Pick an available position")
+            continue
+        if 1 <= position1_choice <= 9:
+            break
+
+
     # ngl i feel so smart doing this shit
-    createdPlayer.position = tempdict.get(position1_choice)
-    # Actually need to be able ot cathc this error if its not in the list :(   
-    available_positions.remove(position1_choice)
-    print(available_positions)
-    print(createdPlayer)
+    #createdPlayer.position = tempdict.get(position1_choice)
+    # Actually need to be able ot cathc this error if its not in the list :(
+    #while True:
+        #if position1_choice in available_positions:
+            #available_positions.remove(position1_choice)
+            #continue
+        #else:
+            #print("Pick a position that is still available")
+    #except ValueError:
+    
+    # Adding the player to the team array
+    users_team.append(createdPlayer)
+    #print(available_positions)
+    #print(createdPlayer)
+    print(f"{createdPlayer.fname} {createdPlayer.lname} added to {team_name} as a {createdPlayer.position}")
+    for i in range(len(users_team)):
+        print("-" * 25)
+        print(users_team[i])
+        print("-" * 25)
 
     return createdPlayer
 
+
+#def team_creation(createdPlayer):
+
+    #users_team.append(createdPlayer)
 
     # Pick the players position on the team
     #position1_choice = int(input("--> "))
@@ -144,6 +259,8 @@ def positionPicker(createdPlayer, available_positions, tempdict):
     #        createdPlayer.position = "bench"
     #        print(createdPlayer)
 
+team_amount = 9
+
 # This creates an array with available position using the dictionary.
 # Runs the command player creation to create a player 9 times.
 # Asks the user if they wanna hire them.
@@ -167,8 +284,9 @@ def playerHireProcess():
         print(i)
         print(available_positions)
     i = 0
-    while(i < 9):
-        createdPlayer = player_creation()
+    while(i < team_amount):
+        fname, lname, batting, pitching, running, catching, throwing, position = player_randomiser()
+        createdPlayer = player_creation(fname, lname, batting, pitching, running, catching, throwing, position)
         print(createdPlayer)
         print("Would you like to hire this player?")
         hire_question_response = input("--> ")
@@ -176,6 +294,8 @@ def playerHireProcess():
             i += 1
             # If the player wants to hire the player
             positionPicker(createdPlayer, available_positions, tempdict)
+        else:
+            continue
 
 
 
@@ -183,6 +303,8 @@ def playerHireProcess():
 if __name__ == "__main__":
     # Creating a player
     playerHireProcess()
+    savePlayersToFile(users_team)
     #print(available_positions)
     #print("Pick a position from the list")
     #position1 = input("--> ")
+    loadPlayersFromFile()
