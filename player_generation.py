@@ -92,6 +92,9 @@ def player_creation(fname, lname, batting, pitching, running, catching, throwing
 #        else:
 #            continue
 
+# WHY DID I PUT ALL OF THIS HERE IT SHOULD BE IN TEAM_CREATION.PY
+# I look down upon myself.
+
 def savePlayersToFile(users_team):
     f = open("UserPlayerTeam.txt", "w")
     for i in range(len(users_team)):
@@ -299,12 +302,19 @@ def playerHireProcess():
 
 
 
+def createRandomPlayersForEnemyTeam():
+    enemyTeam = []
+    for i in range(0, 9):
+        fname, lname, batting, pitching, running, catching, throwing, position = player_randomiser()
+        createdPlayer = player_creation(fname, lname, batting, pitching, running, catching, throwing, position)
+        enemyTeam.append(createdPlayer)
+        print(createdPlayer)
+    print(enemyTeam)
+    return enemyTeam
 
 if __name__ == "__main__":
     # Creating a player
-    playerHireProcess()
-    savePlayersToFile(users_team)
-    #print(available_positions)
-    #print("Pick a position from the list")
-    #position1 = input("--> ")
-    loadPlayersFromFile()
+    #playerHireProcess()
+    #savePlayersToFile(users_team)
+    #loadPlayersFromFile()
+    createRandomPlayersForEnemyTeam()

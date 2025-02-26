@@ -3,6 +3,7 @@
 # FOR FUTURE: Have a way of organising the players in stats of best to worst so for example the pitcher is designated as whoever has the best pitching ig
 
 import random
+from player_generation import *
 
 available_teamnames = []
 
@@ -17,14 +18,16 @@ same_team = True
 
 number_of_teams = len(available_teamnames) - 1
 
+Team1_Players = []
+Team1_Players = []
+
 def create_team():
     #print(number_of_teams)
     #print(available_teamnames[random.randint(0, number_of_teams)])
 
     Team1_name = available_teamnames[random.randint(0, number_of_teams)]
     available_teamnames.remove(Team1_name)
-
-    Team2_name = available_teamnames[random.randint(0, number_of_teams)]
+    Team2_name = available_teamnames[random.randint(0, number_of_teams - 1)]
 
     print(Team1_name)
     print(Team2_name)
