@@ -312,6 +312,10 @@ def createRandomPlayersForEnemyTeam():
     print(enemyTeam)
     return enemyTeam
 
+
+
+
+
 if __name__ == "__main__":
     # Creating a player
     #playerHireProcess()
